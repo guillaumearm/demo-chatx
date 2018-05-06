@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1d9cc327b682ff2d9bb8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b081bbdaaa41151147c6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -39120,7 +39120,7 @@
 	    dispatch((0, _ajaxStatusActions.beginAjaxCall)());
 	    _firebase2.default.GetChildAddedByKeyOnce('/users', userUID).then(function (user) {
 	      dispatch((0, _userActions.userLoadedSuccess)(user.val()));
-	      dispatch((0, _reactRouterRedux.push)('/chat'));
+	      dispatch((0, _reactRouterRedux.push)('chat'));
 	    }).catch(function (error) {
 	      dispatch((0, _ajaxStatusActions.beginAjaxCall)());
 	      // @TODO better error handling
@@ -39159,7 +39159,7 @@
 	  return function (dispatch) {
 	    dispatch((0, _ajaxStatusActions.beginAjaxCall)());
 	    return _firebase2.default.authSignOut().then(function () {
-	      dispatch((0, _reactRouterRedux.push)('/login'));
+	      dispatch((0, _reactRouterRedux.push)('login'));
 	      dispatch(authLoggedOutSuccess());
 	    }).catch(function (error) {
 	      dispatch((0, _ajaxStatusActions.ajaxCallError)(error));
@@ -39184,7 +39184,7 @@
 	function requireAuth(nextState, replace) {
 	  return function (dispatch, getState) {
 	    if (!getState().auth.isLogged) {
-	      redirect(replace, '/login', nextState.location.pathname, 'You need to be logged to access this page');
+	      redirect(replace, 'login', nextState.location.pathname, 'You need to be logged to access this page');
 	    }
 	  };
 	}
@@ -39194,7 +39194,7 @@
 	    if (getState().auth.isLogged) {
 	      switch (getState().user.isAdmin) {
 	        case false:
-	          redirect(replace, '/login', nextState.location.pathname, 'You need to be logged to access this page');
+	          redirect(replace, 'login', nextState.location.pathname, 'You need to be logged to access this page');
 	          break;
 	        case undefined:
 	          _firebase2.default.GetChildAddedByKeyOnce('/isAdmin/', getState().auth.currentUserUID).then(function (user) {
@@ -39202,11 +39202,11 @@
 	              dispatch((0, _userActions.userIsAdminSuccess)());
 	              callback();
 	            } else {
-	              redirect(replace, '/login', nextState.location.pathname, 'You need to be logged to access this page');
+	              redirect(replace, 'login', nextState.location.pathname, 'You need to be logged to access this page');
 	            }
 	          }).catch(function (error) {
 	            dispatch((0, _ajaxStatusActions.ajaxCallError)());
-	            redirect(replace, '/login', nextState.location.pathname, 'You need to be logged to access this page');
+	            redirect(replace, 'login', nextState.location.pathname, 'You need to be logged to access this page');
 	            callback();
 	            // @TODO better error handling
 	            throw error;
@@ -39218,7 +39218,7 @@
 	
 	      }
 	    } else {
-	      redirect(replace, '/login', nextState.location.pathname, 'You need to be logged to access this page');
+	      redirect(replace, 'login', nextState.location.pathname, 'You need to be logged to access this page');
 	      callback();
 	    }
 	  };
@@ -49936,19 +49936,19 @@
 	    " | ",
 	    _react2.default.createElement(
 	      _reactRouter.Link,
-	      { to: '/about', activeClassName: 'active' },
+	      { to: 'about', activeClassName: 'active' },
 	      'About'
 	    ),
 	    " | ",
 	    _react2.default.createElement(
 	      _reactRouter.Link,
-	      { to: '/protected', activeClassName: 'active' },
+	      { to: 'protected', activeClassName: 'active' },
 	      'Protected'
 	    ),
 	    " | ",
 	    _react2.default.createElement(
 	      _reactRouter.Link,
-	      { to: '/chat', activeClassName: 'active' },
+	      { to: 'chat', activeClassName: 'active' },
 	      'Chat'
 	    ),
 	    adminLink,
@@ -50075,13 +50075,13 @@
 	    null,
 	    _react2.default.createElement(
 	      _reactRouter.Link,
-	      { to: '/register', activeClassName: 'active' },
+	      { to: 'register', activeClassName: 'active' },
 	      'Sign Up'
 	    ),
 	    " | ",
 	    _react2.default.createElement(
 	      _reactRouter.Link,
-	      { to: '/login', activeClassName: 'active' },
+	      { to: 'login', activeClassName: 'active' },
 	      'Login'
 	    )
 	  );
@@ -50146,7 +50146,7 @@
 	    " | ",
 	    _react2.default.createElement(
 	      _reactRouter.Link,
-	      { to: '/admin', activeClassName: 'active' },
+	      { to: 'admin', activeClassName: 'active' },
 	      'Admin'
 	    )
 	  );
@@ -50300,7 +50300,7 @@
 	      key: 'componentWillMount',
 	      value: function componentWillMount() {
 	        if (!this.props.authenticated) {
-	          this.context.router.push('/login');
+	          this.context.router.push('login');
 	          _toastr2.default.error('You need to be logged to access this page');
 	        }
 	      }
@@ -50308,7 +50308,7 @@
 	      key: 'componentWillUpdate',
 	      value: function componentWillUpdate(nextProps) {
 	        if (!nextProps.authenticated) {
-	          this.context.router.push('/login');
+	          this.context.router.push('login');
 	          _toastr2.default.error('You need to be logged to access this page');
 	        }
 	      }
