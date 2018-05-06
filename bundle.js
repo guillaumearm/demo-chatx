@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "80494db8bd55339ad123"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1d9cc327b682ff2d9bb8"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -49772,6 +49772,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	//eslint-disable-line import/no-named-as-default
+	var originalPathName = window.location.pathname || '/'; //eslint-disable-line import/no-named-as-default
 	function Routes(store) {
 	
 	  var checkAdmin = function checkAdmin(nextState, replace, callback) {
@@ -49780,7 +49781,7 @@
 	
 	  return _react2.default.createElement(
 	    _reactRouter.Route,
-	    { path: '/', component: _Layout2.default },
+	    { path: originalPathName, component: _Layout2.default },
 	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _HomePage2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: 'layout', component: _Layout2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: 'about', component: _AboutPage2.default }),
@@ -49790,7 +49791,7 @@
 	    _react2.default.createElement(_reactRouter.Route, { path: 'register', component: _RegistrationPage2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _LoginPage2.default })
 	  );
-	} //eslint-disable-line import/no-named-as-default
+	}
 
 /***/ }),
 /* 619 */
