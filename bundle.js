@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4b4be4d43998b6e57bb1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e9aeef2c6e4c42e350f7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -50107,9 +50107,13 @@
 	var LogoutLink = function LogoutLink(_ref) {
 	  var signOut = _ref.signOut;
 	
+	  var onClick = function onClick(e) {
+	    e.preventDefault();
+	    return signOut(e);
+	  };
 	  return _react2.default.createElement(
 	    "a",
-	    { href: "#", onClick: signOut },
+	    { href: "#", onClick: onClick },
 	    "Logout"
 	  );
 	};
@@ -50314,7 +50318,10 @@
 	    }, {
 	      key: 'render',
 	      value: function render() {
-	        return _react2.default.createElement(ComposedComponent, this.props);
+	        if (this.props.authenticated) {
+	          return _react2.default.createElement(ComposedComponent, this.props);
+	        }
+	        return null;
 	      }
 	    }]);
 	
