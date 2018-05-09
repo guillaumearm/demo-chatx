@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "306e9a58d1a38d20b814"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2e503bcad91aaa9d8e63"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -9476,33 +9476,30 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	// eslint-disable-next-line
-	// modules
-	console.warn('WIP');
-	
-	// api
+	// store initialization
 	
 	
-	// actions
+	// styles
 	
 	
 	// components
 	
 	
-	// Store
+	// actions
+	var store = (0, _configureStore2.default)(_initialState2.default);
+	
+	// Create an enhanced history that syncs navigation events with the store
+	//Webpack can import CSS files too!
 	//eslint-disable-line import/default
 	
 	// bootstrap
 	
 	
-	// styles
-	//Webpack can import CSS files too!
+	// Store
 	
 	
-	// store initialization
-	var store = (0, _configureStore2.default)(_initialState2.default);
-	
-	// Create an enhanced history that syncs navigation events with the store
+	// api
+	// modules
 	var history = (0, _reactRouterRedux.syncHistoryWithStore)(_reactRouter.hashHistory, store);
 	var rootEl = document.getElementById('root');
 	
