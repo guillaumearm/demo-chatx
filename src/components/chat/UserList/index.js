@@ -8,8 +8,8 @@ export const UserList = ({ currentRoomName, users }) => (
     <ul className="chatx-userlist list-group">
       {
         users.map(({ id, email, isOwner }) => (
-          <li className="list-group-item" key={id}>
-            <span className="badge">
+          <li key={id} className="chatx-userlist-item list-group-item">
+            <span className="badge chatx-userlist-icon">
               <span
                 title={isOwner ? 'Owner' : 'User'}
                 className={`glyphicon glyphicon-${isOwner ? 'king' : 'user'}`}

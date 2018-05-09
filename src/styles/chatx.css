@@ -37,6 +37,14 @@
 .chatx-userlist {
    height: calc(100vh - 220px);
    overflow-y: auto;
+   overflow-x: hidden;
+}
+
+.chatx-userlist-item {
+  word-wrap: break-word;
+}
+
+.chatx-userlist-icon {
 }
 
 .chatx-message-container {
