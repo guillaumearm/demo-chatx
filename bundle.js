@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "92ae2e1af30ca93be8ab"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1815442473fc057fa571"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -64148,7 +64148,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.getFirstRoom = exports.getRooms = exports.getCurrentRoomIsJoined = exports.getRoomIsJoined = exports.getUserJoinedRooms = exports.getCurrentRoomIsOwned = exports.getRoomIsOwned = exports.getCurrentRoomUsers = exports.getCurrentRoomUserMessage = exports.getCurrentRoomName = exports.getCurrentRoomId = exports.getCurrentMessages = exports.getCurrentRoom = undefined;
+	exports.getFirstRoom = exports.getRooms = exports.getCurrentRoomIsJoined = exports.getCurrentRoomIsOwned = exports.getCurrentRoomUsers = exports.getCurrentRoomUserMessage = exports.getCurrentRoomName = exports.getCurrentRoomId = exports.getCurrentMessages = exports.getCurrentRoom = undefined;
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
@@ -64197,7 +64197,7 @@
 	
 	var getOwnedRoomsIds = (0, _reselect.createSelector)(getOwnedRooms, (0, _ramda.map)((0, _ramda.prop)('id')));
 	
-	var getRoomIsOwned = exports.getRoomIsOwned = (0, _reselect.createSelector)(getProp('roomId'), getOwnedRoomsIds, function (roomId, ownedRooms) {
+	var getRoomIsOwned = (0, _reselect.createSelector)(getProp('roomId'), getOwnedRoomsIds, function (roomId, ownedRooms) {
 	  return (0, _ramda.contains)(roomId, ownedRooms);
 	});
 	
@@ -64208,11 +64208,11 @@
 	  return getRoomIsOwned(state, _extends({}, ownProps, { roomId: roomId }));
 	};
 	
-	var getUserJoinedRooms = exports.getUserJoinedRooms = (0, _reselect.createSelector)((0, _ramda.path)(['chatx', 'joinedRooms']), _authSelectors.getCurrentUserUID, function (joinedRooms, uuid) {
+	var getUserJoinedRooms = (0, _reselect.createSelector)((0, _ramda.path)(['chatx', 'joinedRooms']), _authSelectors.getCurrentUserUID, function (joinedRooms, uuid) {
 	  return (0, _ramda.compose)(_ramda.keys, (0, _ramda.filter)((0, _ramda.has)(uuid)))(joinedRooms);
 	});
 	
-	var getRoomIsJoined = exports.getRoomIsJoined = (0, _reselect.createSelector)(getProp('roomId'), getUserJoinedRooms, function (roomId, joinedRooms) {
+	var getRoomIsJoined = (0, _reselect.createSelector)(getProp('roomId'), getUserJoinedRooms, function (roomId, joinedRooms) {
 	  return (0, _ramda.contains)(roomId, joinedRooms);
 	});
 	
