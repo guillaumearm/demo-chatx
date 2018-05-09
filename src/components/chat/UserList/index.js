@@ -11,6 +11,7 @@ export const UserList = ({ currentRoomName, users }) => (
           <li className="list-group-item" key={id}>
             <span className="badge">
               <span
+                title={isOwner ? 'Owner' : 'User'}
                 className={`glyphicon glyphicon-${isOwner ? 'king' : 'user'}`}
               ></span>
             </span>

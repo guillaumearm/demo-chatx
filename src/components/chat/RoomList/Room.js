@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react';
 const Room = ({ canRemove, children, onRemove, onSelect, isSelected, isJoined }) => (
   <div className="btn-block btn-group">
     <button
+      title={`Select #${children}`}
       onClick={onSelect}
       style={{ width: '80%' }}
       type="button"
@@ -11,6 +12,7 @@ const Room = ({ canRemove, children, onRemove, onSelect, isSelected, isJoined })
       {children}
     </button>
     {<button
+      title={!canRemove ? 'You have no right to delete this room' : `Delete #${children}`}
       disabled={!canRemove}
       onClick={onRemove}
       style={{ width: '20%' }}

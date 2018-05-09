@@ -17,6 +17,7 @@ export class Header extends React.Component {
     const { onLeave, currentRoom } = this.props;
     return (
       <button
+        title={`Leave #${currentRoom.name}`}
         type="button"
         className="btn btn-xs btn-danger"
         onClick={() => onLeave(currentRoom.id)}
@@ -30,6 +31,7 @@ export class Header extends React.Component {
     const { onJoin, currentRoom } = this.props;
     return (
       <button
+        title={`Join #${currentRoom.name}`}
         type="button"
         className="btn btn-xs btn-primary"
         onClick={() => onJoin(currentRoom.id)}
