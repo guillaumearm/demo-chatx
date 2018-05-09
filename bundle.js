@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1e1bca750cbc849b4490"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "92b0961db2777282bb21"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -63397,7 +63397,7 @@
 	      onChange: onChange,
 	      value: user.email
 	    }),
-	    _react2.default.createElement(_TextInput2.default, {
+	    _react2.default.createElement(_TextInput2.default, { password: true,
 	      name: 'password',
 	      label: 'Password',
 	      onChange: onChange,
@@ -63443,7 +63443,8 @@
 	      onChange = _ref.onChange,
 	      placeholder = _ref.placeholder,
 	      value = _ref.value,
-	      error = _ref.error;
+	      error = _ref.error,
+	      password = _ref.password;
 	
 	  var wrapperClass = 'form-group';
 	  if (error && error.length > 0) {
@@ -63462,7 +63463,7 @@
 	      'div',
 	      { className: 'field' },
 	      _react2.default.createElement('input', {
-	        type: 'text',
+	        type: password ? 'password' : 'text',
 	        name: name,
 	        className: 'form-control',
 	        placeholder: placeholder,
@@ -63478,6 +63479,7 @@
 	};
 	
 	TextInput.propTypes = {
+	  password: _react.PropTypes.bool,
 	  name: _react.PropTypes.string.isRequired,
 	  label: _react.PropTypes.string.isRequired,
 	  onChange: _react.PropTypes.func.isRequired,
@@ -63643,7 +63645,7 @@
 	      onChange: onChange,
 	      value: user.email
 	    }),
-	    _react2.default.createElement(_TextInput2.default, {
+	    _react2.default.createElement(_TextInput2.default, { password: true,
 	      name: 'password',
 	      label: 'Password',
 	      onChange: onChange,
@@ -63897,6 +63899,7 @@
 	      return _react2.default.createElement(
 	        'button',
 	        {
+	          title: 'Leave #' + currentRoom.name,
 	          type: 'button',
 	          className: 'btn btn-xs btn-danger',
 	          onClick: function onClick() {
@@ -63916,6 +63919,7 @@
 	      return _react2.default.createElement(
 	        'button',
 	        {
+	          title: 'Join #' + currentRoom.name,
 	          type: 'button',
 	          className: 'btn btn-xs btn-primary',
 	          onClick: function onClick() {
@@ -69548,6 +69552,7 @@
 	    _react2.default.createElement(
 	      'button',
 	      {
+	        title: 'Select #' + children,
 	        onClick: onSelect,
 	        style: { width: '80%' },
 	        type: 'button',
@@ -69558,6 +69563,7 @@
 	    _react2.default.createElement(
 	      'button',
 	      {
+	        title: !canRemove ? 'You have no right to delete this room' : 'Delete #' + children,
 	        disabled: !canRemove,
 	        onClick: onRemove,
 	        style: { width: '20%' },
@@ -69819,6 +69825,7 @@
 	            'span',
 	            { className: 'badge' },
 	            _react2.default.createElement('span', {
+	              title: isOwner ? 'Owner' : 'User',
 	              className: 'glyphicon glyphicon-' + (isOwner ? 'king' : 'user')
 	            })
 	          ),
