@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2e503bcad91aaa9d8e63"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "92ae2e1af30ca93be8ab"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -64148,7 +64148,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.getFirstRoom = exports.getRooms = exports.getCurrentRoomIsJoined = exports.getRoomIsJoined = exports.getUserJoinedRooms = exports.getCurrentRoomUsers = exports.getCurrentRoomUserMessage = exports.getCurrentRoomName = exports.getCurrentRoomId = exports.getCurrentMessages = exports.getCurrentRoom = undefined;
+	exports.getFirstRoom = exports.getRooms = exports.getCurrentRoomIsJoined = exports.getRoomIsJoined = exports.getUserJoinedRooms = exports.getCurrentRoomIsOwned = exports.getRoomIsOwned = exports.getCurrentRoomUsers = exports.getCurrentRoomUserMessage = exports.getCurrentRoomName = exports.getCurrentRoomId = exports.getCurrentMessages = exports.getCurrentRoom = undefined;
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
@@ -64196,6 +64196,17 @@
 	});
 	
 	var getOwnedRoomsIds = (0, _reselect.createSelector)(getOwnedRooms, (0, _ramda.map)((0, _ramda.prop)('id')));
+	
+	var getRoomIsOwned = exports.getRoomIsOwned = (0, _reselect.createSelector)(getProp('roomId'), getOwnedRoomsIds, function (roomId, ownedRooms) {
+	  return (0, _ramda.contains)(roomId, ownedRooms);
+	});
+	
+	var getCurrentRoomIsOwned = exports.getCurrentRoomIsOwned = function getCurrentRoomIsOwned(state) {
+	  var ownProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+	
+	  var roomId = getCurrentRoomId(state, ownProps);
+	  return getRoomIsOwned(state, _extends({}, ownProps, { roomId: roomId }));
+	};
 	
 	var getUserJoinedRooms = exports.getUserJoinedRooms = (0, _reselect.createSelector)((0, _ramda.path)(['chatx', 'joinedRooms']), _authSelectors.getCurrentUserUID, function (joinedRooms, uuid) {
 	  return (0, _ramda.compose)(_ramda.keys, (0, _ramda.filter)((0, _ramda.has)(uuid)))(joinedRooms);
@@ -64261,7 +64272,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.changedMessage = exports.removedMessage = exports.addedMessage = exports.refreshJoinedRooms = exports.leftRoom = exports.joinedRoom = exports.changedRoom = exports.removedRoom = exports.addedRoom = exports.changedUser = exports.removedUser = exports.addedUser = exports.sendMessage = exports.changedUserMessage = exports.selectRoom = exports.leaveRoom = exports.joinRoom = exports.removeRoom = exports.createRoom = exports.leaveChat = exports.enterChat = undefined;
+	exports.changedMessage = exports.removedMessage = exports.addedMessage = exports.refreshJoinedRooms = exports.leftRoom = exports.joinedRoom = exports.changedRoom = exports.removedRoom = exports.addedRoom = exports.changedUser = exports.removedUser = exports.addedUser = exports.removeMessage = exports.sendMessage = exports.changedUserMessage = exports.selectRoom = exports.leaveRoom = exports.joinRoom = exports.removeRoom = exports.createRoom = exports.leaveChat = exports.enterChat = undefined;
 	
 	var _reduxActions = __webpack_require__(964);
 	
@@ -64280,6 +64291,9 @@
 	// prompt
 	var changedUserMessage = exports.changedUserMessage = (0, _reduxActions.createAction)('UI/CHATX/CHANGED_USER_MESSAGE');
 	var sendMessage = exports.sendMessage = (0, _reduxActions.createAction)('UI/CHATX/SEND_MESSAGE');
+	
+	// messages
+	var removeMessage = exports.removeMessage = (0, _reduxActions.createAction)('UI/CHATX/REMOVE_MESSAGE');
 	/* ************************************************************************** */
 	
 	/* Users ******************************************************************** */
@@ -69628,22 +69642,48 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var currentMessages = this.props.currentMessages;
+	      var _props = this.props,
+	          currentMessages = _props.currentMessages,
+	          currentUserId = _props.currentUserId,
+	          userIsAdmin = _props.userIsAdmin,
+	          currentRoomIsOwned = _props.currentRoomIsOwned,
+	          removeMessage = _props.removeMessage;
 	
 	      return _react2.default.createElement(
 	        _MainColumn2.default,
 	        null,
 	        currentMessages.map(function (message) {
+	          var canRemove = userIsAdmin || currentRoomIsOwned || message.author.id === currentUserId;
+	          var onRemoveClick = function onRemoveClick() {
+	            return removeMessage(message.id);
+	          };
 	          return _react2.default.createElement(
 	            'p',
-	            { key: message.id },
+	            { key: message.id, className: 'chatx-message-container' },
 	            _react2.default.createElement(
-	              'strong',
-	              null,
-	              message.author.email
+	              'span',
+	              { className: 'chatx-message' },
+	              _react2.default.createElement(
+	                'strong',
+	                null,
+	                message.author.email
+	              ),
+	              ': ',
+	              message.content
 	            ),
-	            ': ',
-	            message.content
+	            canRemove && _react2.default.createElement(
+	              'span',
+	              { className: 'chatx-message-remove-button' },
+	              _react2.default.createElement(
+	                'button',
+	                { onClick: onRemoveClick, title: 'Remove message', className: 'close' },
+	                _react2.default.createElement(
+	                  'span',
+	                  { 'aria-hidden': 'true' },
+	                  '\xD7'
+	                )
+	              )
+	            )
 	          );
 	        })
 	      );
@@ -69652,13 +69692,20 @@
 	
 	  return MessageList;
 	}(_react2.default.Component), _class.propTypes = {
+	  userIsAdmin: _react.PropTypes.bool,
+	  currentRoomIsOwned: _react.PropTypes.bool.isRequired,
+	  currentUserId: _react.PropTypes.string.isRequired,
 	  currentMessages: _react.PropTypes.arrayOf(_react.PropTypes.shape({
 	    id: _react.PropTypes.string.isRequired,
 	    content: _react.PropTypes.string.isRequired,
 	    author: _react.PropTypes.shape({
+	      id: _react.PropTypes.string.isRequired,
 	      email: _react.PropTypes.string.isRequired
 	    }).isRequired
-	  })).isRequired
+	  })).isRequired,
+	  removeMessage: _react.PropTypes.func.isRequired
+	}, _class.defaultProps = {
+	  userIsAdmin: false
 	}, _temp);
 	exports.default = (0, _connector2.default)(MessageList);
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(922).setImmediate))
@@ -69707,13 +69754,22 @@
 	
 	var _reselect = __webpack_require__(959);
 	
+	var _chatxActions = __webpack_require__(963);
+	
 	var _chatxSelectors = __webpack_require__(960);
 	
+	var _authSelectors = __webpack_require__(962);
+	
+	var _userSelectors = __webpack_require__(961);
+	
 	var mapStateToProps = (0, _reselect.createStructuredSelector)({
+	  userIsAdmin: _userSelectors.getUserIsAdmin,
+	  currentRoomIsOwned: _chatxSelectors.getCurrentRoomIsOwned,
+	  currentUserId: _authSelectors.getCurrentUserUID,
 	  currentMessages: _chatxSelectors.getCurrentMessages
 	});
 	
-	var mapDispatchToProps = {};
+	var mapDispatchToProps = { removeMessage: _chatxActions.removeMessage };
 	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps);
 
@@ -73381,6 +73437,7 @@
 	  value: true
 	});
 	exports.sendSaga = sendSaga;
+	exports.removeMessageSaga = removeMessageSaga;
 	exports.default = messagesSaga;
 	
 	var _effects = __webpack_require__(1129);
@@ -73391,12 +73448,15 @@
 	
 	var _authSelectors = __webpack_require__(962);
 	
+	var _chatxSelectors = __webpack_require__(960);
+	
 	var _chatxActions = __webpack_require__(963);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var _marked = /*#__PURE__*/regeneratorRuntime.mark(sendSaga),
-	    _marked2 = /*#__PURE__*/regeneratorRuntime.mark(messagesSaga);
+	    _marked2 = /*#__PURE__*/regeneratorRuntime.mark(removeMessageSaga),
+	    _marked3 = /*#__PURE__*/regeneratorRuntime.mark(messagesSaga);
 	
 	function sendSaga(action) {
 	  var _action$payload, room, message, newMessage;
@@ -73440,20 +73500,62 @@
 	  }, _marked, this, [[1, 12]]);
 	}
 	
-	function messagesSaga() {
-	  return regeneratorRuntime.wrap(function messagesSaga$(_context2) {
+	function removeMessageSaga(action) {
+	  var messageId, currentRoom;
+	  return regeneratorRuntime.wrap(function removeMessageSaga$(_context2) {
 	    while (1) {
 	      switch (_context2.prev = _context2.next) {
 	        case 0:
-	          _context2.next = 2;
-	          return (0, _effects.takeEvery)(_chatxActions.sendMessage, sendSaga);
+	          if (!action.error) {
+	            _context2.next = 2;
+	            break;
+	          }
+	
+	          return _context2.abrupt('return');
 	
 	        case 2:
+	          _context2.prev = 2;
+	          messageId = action.payload;
+	          _context2.next = 6;
+	          return (0, _effects.select)(_chatxSelectors.getCurrentRoom);
+	
+	        case 6:
+	          currentRoom = _context2.sent;
+	          _context2.next = 9;
+	          return (0, _effects.call)(_firebase2.default.databaseRemove, '/messages/' + currentRoom.id + '/' + messageId);
+	
+	        case 9:
+	          _context2.next = 15;
+	          break;
+	
+	        case 11:
+	          _context2.prev = 11;
+	          _context2.t0 = _context2['catch'](2);
+	          _context2.next = 15;
+	          return (0, _effects.put)((0, _chatxActions.removeMessage)(_context2.t0));
+	
+	        case 15:
 	        case 'end':
 	          return _context2.stop();
 	      }
 	    }
-	  }, _marked2, this);
+	  }, _marked2, this, [[2, 11]]);
+	}
+	
+	function messagesSaga() {
+	  return regeneratorRuntime.wrap(function messagesSaga$(_context3) {
+	    while (1) {
+	      switch (_context3.prev = _context3.next) {
+	        case 0:
+	          _context3.next = 2;
+	          return (0, _effects.all)([(0, _effects.takeEvery)(_chatxActions.sendMessage, sendSaga), (0, _effects.takeEvery)(_chatxActions.removeMessage, removeMessageSaga)]);
+	
+	        case 2:
+	        case 'end':
+	          return _context3.stop();
+	      }
+	    }
+	  }, _marked3, this);
 	}
 
 /***/ }),
@@ -76830,7 +76932,7 @@
 	
 	
 	// module
-	exports.push([module.id, "/* Layout */\n.chatx-left-column {\n  border-right: 1px solid black;\n}\n\n.chatx-right-column {\n  border-left: 1px solid black;\n}\n\n.chatx-main-column {\n  height: calc(100vh - 150px);\n  overflow-y: auto;\n}\n\n/* Components */\n.chatx-header {\n  margin-top: 0px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  margin-top: 10px;\n  margin-bottom: 20px;\n}\n\n.chatx-title {\n  margin-top: 0px;\n  margin-bottom: 0px;\n  margin-right: 10px;\n}\n\n.chatx-roomlist {\n  height: calc(100vh - 300px);\n  overflow-y: auto;\n}\n\n.chatx-userlist {\n   height: calc(100vh - 220px);\n   overflow-y: auto;\n}\n", ""]);
+	exports.push([module.id, "/* Layout */\n.chatx-left-column {\n  border-right: 1px solid black;\n}\n\n.chatx-right-column {\n  border-left: 1px solid black;\n}\n\n.chatx-main-column {\n  word-wrap: break-word;\n  height: calc(100vh - 150px);\n  overflow-y: auto;\n}\n\n/* Components */\n.chatx-header {\n  margin-top: 0px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  margin-top: 10px;\n  margin-bottom: 20px;\n}\n\n.chatx-title {\n  margin-top: 0px;\n  margin-bottom: 0px;\n  margin-right: 10px;\n}\n\n.chatx-roomlist {\n  height: calc(100vh - 300px);\n  overflow-y: auto;\n}\n\n.chatx-userlist {\n   height: calc(100vh - 220px);\n   overflow-y: auto;\n}\n\n.chatx-message-container {\n  position: relative;\n  padding: 5px;\n}\n\n.chatx-message-remove-button {\n  visibility: hidden;\n}\n\n.chatx-message-container:hover {\n  border: 1px solid lightgrey;\n\n  padding: 4px;\n}\n\n.chatx-message-container:hover .chatx-message-remove-button {\n  visibility: visible;\n}\n\n/* .chatx-message-container {\n  display: hidden;\n} */\n\n.chatx-message {\n  width: 80%;\n}\n\n.chatx-message-remove-button {\n  position: absolute;\n  top: 0px;\n  right: 20px;\n}\n", ""]);
 	
 	// exports
 
