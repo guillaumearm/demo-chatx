@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "92b0961db2777282bb21"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ca38747065f718df6ebd"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -69820,10 +69820,10 @@
 	            isOwner = _ref2.isOwner;
 	        return _react2.default.createElement(
 	          'li',
-	          { className: 'list-group-item', key: id },
+	          { key: id, className: 'chatx-userlist-item list-group-item' },
 	          _react2.default.createElement(
 	            'span',
-	            { className: 'badge' },
+	            { className: 'badge chatx-userlist-icon' },
 	            _react2.default.createElement('span', {
 	              title: isOwner ? 'Owner' : 'User',
 	              className: 'glyphicon glyphicon-' + (isOwner ? 'king' : 'user')
@@ -76958,7 +76958,7 @@
 	
 	
 	// module
-	exports.push([module.id, "/* Layout */\n.chatx-left-column {\n  border-right: 1px solid black;\n}\n\n.chatx-right-column {\n  border-left: 1px solid black;\n}\n\n.chatx-main-column {\n  word-wrap: break-word;\n  height: calc(100vh - 150px);\n  overflow-y: auto;\n}\n\n/* Components */\n.chatx-header {\n  margin-top: 0px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  margin-top: 10px;\n  margin-bottom: 20px;\n}\n\n.chatx-title {\n  margin-top: 0px;\n  margin-bottom: 0px;\n  margin-right: 10px;\n}\n\n.chatx-roomlist {\n  height: calc(100vh - 300px);\n  overflow-y: auto;\n}\n\n.chatx-userlist {\n   height: calc(100vh - 220px);\n   overflow-y: auto;\n}\n\n.chatx-message-container {\n  position: relative;\n  padding: 5px;\n}\n\n.chatx-message-remove-button {\n  visibility: hidden;\n}\n\n.chatx-message-container:hover {\n  border: 1px solid lightgrey;\n\n  padding: 4px;\n}\n\n.chatx-message-container:hover .chatx-message-remove-button {\n  visibility: visible;\n}\n\n/* .chatx-message-container {\n  display: hidden;\n} */\n\n.chatx-message {\n  width: 80%;\n}\n\n.chatx-message-remove-button {\n  position: absolute;\n  top: 0px;\n  right: 20px;\n}\n", ""]);
+	exports.push([module.id, "/* Layout */\n.chatx-left-column {\n  border-right: 1px solid black;\n}\n\n.chatx-right-column {\n  border-left: 1px solid black;\n}\n\n.chatx-main-column {\n  word-wrap: break-word;\n  height: calc(100vh - 150px);\n  overflow-y: auto;\n}\n\n/* Components */\n.chatx-header {\n  margin-top: 0px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  margin-top: 10px;\n  margin-bottom: 20px;\n}\n\n.chatx-title {\n  margin-top: 0px;\n  margin-bottom: 0px;\n  margin-right: 10px;\n}\n\n.chatx-roomlist {\n  height: calc(100vh - 300px);\n  overflow-y: auto;\n}\n\n.chatx-userlist {\n   height: calc(100vh - 220px);\n   overflow-y: auto;\n   overflow-x: hidden;\n}\n\n.chatx-userlist-item {\n  word-wrap: break-word;\n}\n\n.chatx-userlist-icon {\n}\n\n.chatx-message-container {\n  position: relative;\n  padding: 5px;\n}\n\n.chatx-message-remove-button {\n  visibility: hidden;\n}\n\n.chatx-message-container:hover {\n  border: 1px solid lightgrey;\n\n  padding: 4px;\n}\n\n.chatx-message-container:hover .chatx-message-remove-button {\n  visibility: visible;\n}\n\n/* .chatx-message-container {\n  display: hidden;\n} */\n\n.chatx-message {\n  width: 80%;\n}\n\n.chatx-message-remove-button {\n  position: absolute;\n  top: 0px;\n  right: 20px;\n}\n", ""]);
 	
 	// exports
 
