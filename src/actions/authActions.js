@@ -43,7 +43,7 @@ export function authLoggedIn(userUID) {
       .then(
         user => {
           dispatch(userLoadedSuccess(user.val()));
-          dispatch(push('/'));
+          dispatch(push('/chat'));
         })
       .catch(
         error => {
@@ -84,16 +84,13 @@ export function signInWithEmailAndPassword(user) {
 }
 
 export function signOut() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(beginAjaxCall());
     return firebaseApi.authSignOut()
       .then(
         () => {
+          dispatch(push('/login'));
           dispatch(authLoggedOutSuccess());
-          if (getState().routesPermissions.requireAuth
-              .filter(route => route === getState().routing.locationBeforeTransitions.pathname).toString()) {
-            dispatch(push('/'));
-          }
         })
       .catch(error => {
         dispatch(ajaxCallError(error));

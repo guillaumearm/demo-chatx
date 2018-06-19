@@ -5,7 +5,8 @@
     "plugin:import/warnings"
   ],
   "plugins": [
-    "react"
+    "react",
+    "redux-saga"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
@@ -33,12 +34,8 @@
     "no-debugger": 1,
     "no-var": 1,
     "semi": [1, "always"],
-    "no-trailing-spaces": 0,
     "eol-last": 0,
-    "no-unused-vars": 0,
     "no-underscore-dangle": 0,
-    "no-alert": 0,
-    "no-lone-blocks": 0,
     "comma-dangle": ["error", "always-multiline"],
     "object-curly-spacing": ["error", "always"],
     "jsx-quotes": 1,
@@ -50,7 +47,7 @@
     "react/jsx-indent-props": 0,
     "react/jsx-key": 1,
     "react/jsx-max-props-per-line": 0,
-    "react/jsx-no-bind": 1,
+    "react/jsx-no-bind": [1, { "allowArrowFunctions": true }],
     "react/jsx-no-duplicate-props": 1,
     "react/jsx-no-literals": 0,
     "react/jsx-no-undef": 1,
@@ -72,6 +69,9 @@
     "react/require-extension": 1,
     "react/self-closing-comp": 1,
     "react/sort-comp": 1,
-    "react/wrap-multilines": 1
+    "react/wrap-multilines": 1,
+    "no-constant-condition": 0,
+    "redux-saga/no-yield-in-race": 2,
+    "redux-saga/yield-effects": 2
   }
 }

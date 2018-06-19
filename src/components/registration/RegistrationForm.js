@@ -12,7 +12,7 @@ const RegistrationForm = ({ user, onSave, onChange, saving }) => {
         value={user.email}
         />
 
-      <TextInput
+      <TextInput password
         name="password"
         label="Password"
         onChange={onChange}

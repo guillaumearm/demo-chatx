@@ -2,7 +2,7 @@ import firebaseApi from '../api/firebase';
 import * as types from './actionTypes';
 
 import { authLoggedIn } from './authActions';
-import { ajaxCallError, beginAjaxCall } from './ajaxStatusActions';
+import { ajaxCallError } from './ajaxStatusActions';
 
 function extractUserProperties(firebaseUser) {
 
@@ -13,9 +13,6 @@ function extractUserProperties(firebaseUser) {
     'emailVerified',
     'isAnonymous',
     'photoURL',
-    'providerData',
-    'providerId',
-    'refreshToken',
     'uid',
     'isAdmin',
   ];
